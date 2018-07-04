@@ -1,14 +1,6 @@
-//Clase Dom Component Object
-
-function DCO(x){
-    
-    this.obj = x;
-    
-}
-
 //Funcion que crea una nueva instancia DCO a partir del elemento elegido
 
-function º(x=false) {
+var º = function(x=document.getElementsByTagName("BODY")[0]) {
     
     if(typeof x === 'string'){
         
@@ -30,9 +22,17 @@ function º(x=false) {
         
     }else{
         
-        return new DCO(document.getElementsByTagName("BODY")[0]);
+        console.log('no existe ese elemento');
         
     }
+}
+
+//Clase Dom Component Object
+
+function DCO(x){
+    
+    this.e = x;
+    
 }
 
 //funcion que ayuda a normalizar el formato de fecha
@@ -41,7 +41,7 @@ DCO.prototype.formatDate = function(t=false) {
 
     if(t==false){
 
-        var o = this.obj.value.split('-');
+        var o = this.e.value.split('-');
 
         var val = o[2]+'-'+o[1]+'-'+o[0];
 
@@ -53,9 +53,9 @@ DCO.prototype.formatDate = function(t=false) {
 
         var val = o[2]+'-'+o[1]+'-'+o[0];
 
-        this.obj.value=val;
+        this.e.value=val;
 
-        return;
+        return this;
 
     }
 
@@ -67,17 +67,17 @@ DCO.prototype.formToJSON = function (){
     
     var array = {};
     
-    for (var x=0;this.obj.elements.length>x;x++){
+    for (var x=0;this.e.elements.length>x;x++){
         
         if ((
-                typeof this.obj.elements[x].name !== 'undefined' &&
-                this.obj.elements[x].name !== ''
+                typeof this.e.elements[x].name !== 'undefined' &&
+                this.e.elements[x].name !== ''
             ) && (
-                this.obj.elements[x].type !== 'checkbox' ||
-                this.obj.elements[x].checked)
+                this.e.elements[x].type !== 'checkbox' ||
+                this.e.elements[x].checked)
         ) {
             
-            array[this.obj.elements[x].name] = this.obj.elements[x].value
+            array[this.e.elements[x].name] = this.e.elements[x].value
         
         }
     }
@@ -90,7 +90,8 @@ DCO.prototype.formToJSON = function (){
 
 DCO.prototype.ajaxSubmit = function (callback = function(request){console.log(request.response)}){
     
-    this.ajax({url:this.obj.getAttribute('action'),type:'POST',data:new FormData(this.obj),callback:callback});
+    this.ajax({url:this.e.getAttribute('action'),type:'POST',data:new FormData(this.e),callback:callback});
+    return this;
     
 }
 
@@ -135,6 +136,8 @@ DCO.prototype.ajax = function (options = {}){
     
     request.send(foptions.data);
     
+    return this;
+    
 }
 
 // Funcion para crear un elemento parametrizado
@@ -159,7 +162,7 @@ DCO.prototype.create = function(options = {}){
     
     var x = document.createElement(foptions.type)
     
-    var o = this.obj.appendChild(x);
+    var o = this.e.appendChild(x);
     
     o.innerHTML = foptions.html;
     o.id = foptions.id;
@@ -170,22 +173,60 @@ DCO.prototype.create = function(options = {}){
     
     if(foptions.first == true){
             
-        this.obj.insertBefore(o,this.obj.firstChild)
+        this.e.insertBefore(o,this.e.firstChild)
             
     }
     
     if(foptions.before != false){
             
-        this.obj.insertBefore(o,º(foptions.before).obj)
+        this.e.insertBefore(o,º(foptions.before).e)
             
     }
+    
+    return new DCO(o);
     
 }
 
 // crear al principo
 
-DCO.prototype.after = function(options){
+DCO.prototype.on = function(event,callback){
     
-    console.log(options)
+    this.e.addEventListener(event,callback)
+    return this;
+    
+}
+
+DCO.prototype.modify = function(options={}){
+    
+    for( var attr in options )this.e.setAttribute(attr,options[attr]);
+    return this;
+    
+}
+
+DCO.prototype.style = function(options={}){
+    
+    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+    return this;
+    
+}
+
+DCO.prototype.style = function(options={}){
+    
+    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+    return this;
+    
+}
+
+DCO.prototype.show = function(options={}){
+    
+    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+    return this;
+    
+}
+
+DCO.prototype.hide = function(options={}){
+    
+    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+    return this;
     
 }
