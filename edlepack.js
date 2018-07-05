@@ -147,14 +147,15 @@ DCO.prototype.create = function(options = {}){
     var foptions = {};
     
     var defaults = {
-        class:'',
-        id:'',
+        class:false,
+        id:false,
         type:'div',
         html:'',
-        value:'',
+        value:false,
         attr:{},
         first:true,
-        before:false
+        before:false,
+        childs:false
     }
     
     for(var _obj in defaults) foptions[_obj ]=defaults[_obj];
@@ -165,10 +166,15 @@ DCO.prototype.create = function(options = {}){
     var o = this.e.appendChild(x);
     
     o.innerHTML = foptions.html;
-    o.id = foptions.id;
-    o.className = foptions.class;
-    o.value = foptions.value;
-    
+    if(foptions.id){
+        o.id = foptions.id;
+    }
+    if(foptions.class){
+        o.className = foptions.class;
+    }
+    if(foptions.value){
+        o.value = foptions.value;
+    }
     for( var attr in foptions.attr )o.setAttribute(attr,foptions.attr[attr]);
     
     if(foptions.first == true){
@@ -180,6 +186,12 @@ DCO.prototype.create = function(options = {}){
     if(foptions.before != false){
             
         this.e.insertBefore(o,º(foptions.before).e)
+            
+    }
+    
+    if(foptions.childs != false){
+            
+        º(o).render(foptions.childs);
             
     }
     
@@ -227,6 +239,82 @@ DCO.prototype.show = function(options={}){
 DCO.prototype.hide = function(options={}){
     
     for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+    return this;
+    
+}
+
+DCO.prototype.render = function(Edle_template=[],data={}){
+    
+    var template = JSON.parse(JSON.stringify(Edle_template));
+    
+    for(var _obj in data) E_Data[_obj]=data[_obj];
+    
+    for(var x=0;template.length > x;x++ ){
+        
+        for( var typ in template[x] ){
+            
+            if(typeof template[x][typ].first === 'undefined'){
+               template[x][typ].first = false;
+            }
+            
+            template[x][typ].type = typ;
+            
+            for(var val in template[x][typ]){
+                
+                if(new RegExp('{{(.*?)}}').test(template[x][typ][val])){
+                    
+                    var vval = template[x][typ][val].replace(/{|}/g,'');
+                    
+                    if(new RegExp(']$').test(vval)){
+                        
+                        var vvval = vval.split('[');
+                       
+                        template[x][typ][val]=E_Data[vvval[0]][vvval[1].replace(']','')];
+                        
+                        for(var z=2; typeof template[x][typ][val]==='object' ;z++ ){
+                            
+                            template[x][typ][val]=template[x][typ][val][vvval[z].replace(']','')];
+                            
+                        }
+                       
+                    }else if(new RegExp(/\./).test(vval)){
+                        
+                        var vvval = vval.split('.');
+                        
+                        template[x][typ][val]=E_Data[vvval[0]][vvval[1]];
+                        
+                        for(var z=2; typeof template[x][typ][val]==='object' ;z++ ){
+                            
+                            template[x][typ][val]=template[x][typ][val][vvval[z]];
+                            
+                        }
+                       
+                    }else if(new RegExp('(/|raw)$').test(vval)){
+                       
+                        template[x][typ][val]=JSON.stringify(E_Data[vval.replace(/\|raw/g,'')]);
+                       
+                    }else{
+                        
+                        template[x][typ][val]=E_Data[vval];
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            this.create(template[x][typ]);
+            
+        }
+        
+    }
+ 
+    return this;
+    
+}
+
+DCO.prototype.proccessDCOvar = function(val){
+    
     return this;
     
 }
