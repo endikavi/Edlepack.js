@@ -318,3 +318,38 @@ DCO.prototype.proccessDCOvar = function(val){
     return this;
     
 }
+
+DCO.prototype.promise = function(){
+    
+    return new Promise(
+    
+        function (resolve, reject){
+            
+            setTimeout(function(){resolve("¡Éxito!");}, 5000);
+            
+        }
+    
+    );
+    
+}
+
+DCO.prototype.today = function(){
+    
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd = '0'+dd
+    } 
+
+    if(mm<10) {
+        mm = '0'+mm
+    } 
+
+    today = mm + '-' + dd + '-' + yyyy;
+                
+    return today;
+    
+}
