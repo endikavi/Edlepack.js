@@ -1,3 +1,7 @@
+// Variables globales 
+var E_Data={};
+var E_Actual_Dom=[];
+
 //Funcion que crea una nueva instancia DCO a partir del elemento elegido
 
 var º = function(x=document.getElementsByTagName("BODY")[0]) {
@@ -314,6 +318,16 @@ DCO.prototype.render = function(Edle_template=[],data={}){
 }
 
 DCO.prototype.proccessDCOvar = function(val){
+    
+    return this;
+    
+}
+
+DCO.prototype.DomToJSON = function(){
+    
+    
+    
+    E_Actual_Dom=[]
     
     return this;
     

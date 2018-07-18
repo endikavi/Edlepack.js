@@ -1,4 +1,4 @@
-var E_Data={};
+//Templates de prueba
 
 var Templates = {
     
@@ -32,6 +32,6 @@ var Templates = {
         
         {input:{attr:{id:'pepe',name:'miinput'},value:'Muy bien'}}
     
-    ]
+    ] 
 
 }
