@@ -18,12 +18,10 @@ var Templates = {
         {form:{attr:{id:'dos',action:'/prueba',method:'post'},childs:[
             
             {label:{html:'Nombre',id:'labeltext',class:'mylabel'}},
-            //'<label id="labeltext" class="mylabel">Nombre</label>'
             {input:{attr:{id:'name',name:'name'},value:'{{nombre}}'}},
             {br:{}},
             {label:{html:'Apellido'}},
             {input:{attr:{id:'surname',name:'surname'},value:'{{array.apellido.primero}}'}},
-            //'<input id="surname" name="surname" value="'+array[apellido][primero]+'">'
             {br:{}},
             {label:{html:'Edad'}},
             {input:{attr:{id:'age',type:'number',name:'age'},value:21}}
@@ -32,6 +30,22 @@ var Templates = {
         
         {input:{attr:{id:'pepe',name:'miinput'},value:'Muy bien'}}
     
-    ] 
+    ],
+    
+    Post : [
+        
+        {div:{id:'{{id}}',class:'card',childs:[
+            
+            {h3:{html:'{{nombre}}'}},
+            
+            {div:{class:'msg',childs:[
+            
+                {p:{html:'{{mensaje}}'}}
+            
+            ]}}
+            
+        ]}}
+        
+    ]
 
 }
