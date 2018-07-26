@@ -357,3 +357,22 @@ DCO.prototype.today = function(){
     return today;
     
 }
+
+DCO.prototype.Update = function(){
+    
+    var actualDom = this.e.innerHTML;
+    
+}
+
+DCO.prototype.FuckYouAll = function(){
+    
+    var hate = 100000;
+    
+    for(var x=0;hate>x;x++){
+        
+        console.log('Fuck');
+        
+    }
+    
+}
+
