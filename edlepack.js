@@ -375,3 +375,20 @@ DCO.prototype.FuckYouAll = function(){
     }
     
 }
+
+DCO.prototype.render2 = function(Edle_template=[],data={}){
+    
+    var html = Edle_template;
+    
+    while(new RegExp('{{(.*?)}}').test(html)){
+        
+        var result = /{{(.*?)}}/.exec(html);
+        html=html.replace( result[0], data[result[1]]);
+        
+    }
+            
+    this.create({html:html});
+
+    return this;
+    
+}

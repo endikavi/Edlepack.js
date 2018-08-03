@@ -46,6 +46,18 @@ var Templates = {
             
         ]}}
         
-    ]
+    ],
+    
+    Type2 : `
+
+        <h3>{{nombre}}</h3>
+
+        <div class="msg">
+
+            <p>{{mensaje}}</p>
+
+        </div>   
+
+    `
 
 }
