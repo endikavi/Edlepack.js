@@ -226,7 +226,7 @@ DCO.prototype.style = function(options={}){
     
 }
 
-DCO.prototype.style = function(options={}){
+DCO.prototype.stylee = function(options={}){
     
     for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
     return this;
@@ -364,18 +364,6 @@ DCO.prototype.Update = function(){
     
 }
 
-DCO.prototype.FuckYouAll = function(){
-    
-    var hate = 100000;
-    
-    for(var x=0;hate>x;x++){
-        
-        console.log('Fuck');
-        
-    }
-    
-}
-
 DCO.prototype.render2 = function(Edle_template=[],data={}){
     
     var html = Edle_template;
@@ -387,8 +375,130 @@ DCO.prototype.render2 = function(Edle_template=[],data={}){
         
     }
             
-    this.create({html:html});
+    this.create({html:html,first:false});
 
     return this;
     
 }
+
+//clase para manejar sonido y musica.
+
+function music (src,loop = false){
+	
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.loop = loop;
+    this.sound.volume=100;
+    this.sound.loaded = false;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+	
+    document.body.appendChild(this.sound);
+    
+    this.play = function() {
+        
+        this.sound.src = src;
+        this.sound.load();
+        this.sound.play().catch(function(error) {});
+        
+    }
+	
+    this.stop = function() {
+		
+        this.sound.pause();
+		
+    }
+    
+	
+    this.volume = function(v) {
+		
+        this.sound.volume = v ;
+		
+    }
+	
+	this.sound.onload = function() {
+		
+		this.sound.loaded = true;
+		
+	};
+    
+    this.sound.onerror = function() {
+		if (this.sound.loaded == false){
+            
+			console.log("Failed loading: " + src);
+            
+		}
+	};
+
+    return this;
+    
+}
+
+// Animaciones con css:
+
+DCO.prototype.Dispell = function(){
+    
+    return this;
+    
+}
+
+DCO.prototype.Summon = function(){
+    
+    return this;
+    
+}
+
+DCO.prototype.Help = function(){
+    
+    return this;
+    
+}
+
+DCO.prototype.Blur = function(){
+    
+    return this;
+    
+}
+
+
+DCO.prototype.Lock = function(){
+    
+    return this;
+    
+}
+
+DCO.prototype.DisLock = function(){
+    
+    this.e.addEventListener("",callback)
+    
+    return this;
+    
+}
+
+DCO.prototype.makeResponsive = function(){
+    
+    this.e.addEventListener("",callback)
+    
+    return this;
+    
+}
+
+DCO.prototype.orderbytag = function(x){
+    
+    this.e.addEventListener("",callback)
+    
+    return this;
+    
+}
+
+DCO.prototype.run = function(x){
+    
+    this.e.addEventListener("",callback)
+    
+    return this;
+    
+}
+
+// regex de validaciones mejoradas para campos texto,numeros,fecha etc  archivo principal limite en 1200 lineas despues dividir en distintos pluggins o addons
+

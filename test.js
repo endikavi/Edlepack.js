@@ -52,7 +52,17 @@ function TryNewEdleRender(){
 
     for (var x=0;2000>x;x++){
 
-        º('#board').render2(Templates['Type2'],{nombre:'Felipe',mensaje:'Hola buenos dias'});
+        º('#board').render2(`
+
+        <h3>{{nombre}} {{index}}</h3>
+
+        <div class="msg">
+
+            <p>{{mensaje}} {{index}}</p>
+
+        </div>   
+
+    `,{nombre:'Felipe ' ,mensaje:'Hola buenos dias' ,index:x});
  
     }
     
