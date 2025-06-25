@@ -220,32 +220,134 @@ DCO.prototype.modify = function(options={}){
 }
 
 DCO.prototype.style = function(options={}){
-    
-    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+
+    for( var attr in options ){
+        this.e.style[attr] = options[attr];
+    }
     return this;
-    
+
 }
 
-DCO.prototype.stylee = function(options={}){
-    
-    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+DCO.prototype.stylee = function(styleString=''){
+
+    this.e.setAttribute('style', styleString);
     return this;
-    
+
 }
 
-DCO.prototype.show = function(options={}){
-    
-    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+DCO.prototype.show = function(){
+
+    this.e.style.display = '';
     return this;
-    
+
 }
 
-DCO.prototype.hide = function(options={}){
-    
-    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+DCO.prototype.hide = function(){
+
+    this.e.style.display = 'none';
     return this;
-    
-}
+
+};
+
+DCO.prototype.toggle = function(){
+
+    if(this.e.style.display === 'none' || window.getComputedStyle(this.e).display === 'none'){
+        this.show();
+    }else{
+        this.hide();
+    }
+    return this;
+
+};
+
+DCO.prototype.addClass = function(cls=''){
+
+    if(cls){
+        this.e.classList.add(cls);
+    }
+    return this;
+
+};
+
+DCO.prototype.removeClass = function(cls=''){
+
+    if(cls){
+        this.e.classList.remove(cls);
+    }
+    return this;
+
+};
+
+DCO.prototype.toggleClass = function(cls=''){
+
+    if(cls){
+        this.e.classList.toggle(cls);
+    }
+    return this;
+
+};
+
+DCO.prototype.attr = function(name, value){
+
+    if(typeof value === 'undefined'){
+        return this.e.getAttribute(name);
+    }
+    this.e.setAttribute(name, value);
+    return this;
+
+};
+
+DCO.prototype.text = function(value){
+
+    if(typeof value === 'undefined'){
+        return this.e.textContent;
+    }
+    this.e.textContent = value;
+    return this;
+
+};
+
+DCO.prototype.html = function(value){
+
+    if(typeof value === 'undefined'){
+        return this.e.innerHTML;
+    }
+    this.e.innerHTML = value;
+    return this;
+
+};
+
+DCO.prototype.data = function(key, value){
+
+    if(typeof value === 'undefined'){
+        return this.e.dataset[key];
+    }
+    this.e.dataset[key] = value;
+    return this;
+
+};
+
+DCO.prototype.fetchJSON = function(url, callback){
+
+    var self = this;
+    this.ajax({
+        url: url,
+        type: 'GET',
+        callback: function(req){
+            var data = null;
+            try{
+                data = JSON.parse(req.responseText);
+            }catch(e){
+                data = null;
+            }
+            if(callback){
+                callback(data, req, self);
+            }
+        }
+    });
+    return this;
+
+};
 
 DCO.prototype.render = function(Edle_template=[],data={}){
     
