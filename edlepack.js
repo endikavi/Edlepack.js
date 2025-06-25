@@ -220,31 +220,33 @@ DCO.prototype.modify = function(options={}){
 }
 
 DCO.prototype.style = function(options={}){
-    
-    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+
+    for( var attr in options ){
+        this.e.style[attr] = options[attr];
+    }
     return this;
-    
+
 }
 
-DCO.prototype.stylee = function(options={}){
-    
-    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+DCO.prototype.stylee = function(styleString=''){
+
+    this.e.setAttribute('style', styleString);
     return this;
-    
+
 }
 
-DCO.prototype.show = function(options={}){
-    
-    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+DCO.prototype.show = function(){
+
+    this.e.style.display = '';
     return this;
-    
+
 }
 
-DCO.prototype.hide = function(options={}){
-    
-    for( var attr in foptions.attr )this.e.setAttribute('style',nstyle);
+DCO.prototype.hide = function(){
+
+    this.e.style.display = 'none';
     return this;
-    
+
 }
 
 DCO.prototype.render = function(Edle_template=[],data={}){
