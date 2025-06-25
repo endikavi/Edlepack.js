@@ -213,11 +213,20 @@ DCO.prototype.on = function(event,callback){
 }
 
 DCO.prototype.modify = function(options={}){
-    
+
     for( var attr in options )this.e.setAttribute(attr,options[attr]);
     return this;
-    
-}
+
+};
+
+// get or set a single attribute
+DCO.prototype.attr = function(name,value){
+    if(typeof value === 'undefined'){
+        return this.e.getAttribute(name);
+    }
+    this.e.setAttribute(name,value);
+    return this;
+};
 
 DCO.prototype.style = function(options={}){
 
@@ -235,6 +244,16 @@ DCO.prototype.stylee = function(styleString=''){
 
 }
 
+// get or set the text content of the element
+DCO.prototype.text = function(value){
+    if(typeof value === "undefined"){
+        return this.e.textContent;
+    }
+    this.e.textContent = value;
+    return this;
+};
+
+
 DCO.prototype.show = function(){
 
     this.e.style.display = '';
@@ -247,7 +266,60 @@ DCO.prototype.hide = function(){
     this.e.style.display = 'none';
     return this;
 
-}
+
+// toggle visibility
+DCO.prototype.toggle = function(){
+    if(this.e.style.display === "none"){
+        this.show();
+    }else{
+        this.hide();
+    }
+    return this;
+};
+
+// remove element from DOM
+DCO.prototype.remove = function(){
+    if(this.e.parentNode){
+        this.e.parentNode.removeChild(this.e);
+    }
+    return this;
+};
+
+// append child element or html
+DCO.prototype.append = function(child){
+    if(typeof child === "string"){
+        this.e.insertAdjacentHTML("beforeend", child);
+    }else if(child instanceof DCO){
+        this.e.appendChild(child.e);
+    }else if(child instanceof Element){
+        this.e.appendChild(child);
+    }
+    return this;
+};
+
+// prepend child element or html
+DCO.prototype.prepend = function(child){
+    if(typeof child === "string"){
+        this.e.insertAdjacentHTML("afterbegin", child);
+    }else if(child instanceof DCO){
+        this.e.insertBefore(child.e, this.e.firstChild);
+    }else if(child instanceof Element){
+        this.e.insertBefore(child, this.e.firstChild);
+    }
+    return this;
+};
+
+// add event listener that triggers once
+DCO.prototype.once = function(event, callback){
+    var self = this;
+    var handler = function(e){
+        self.e.removeEventListener(event, handler);
+        callback.call(self.e, e);
+    };
+    this.e.addEventListener(event, handler);
+    return this;
+};
+
 
 DCO.prototype.render = function(Edle_template=[],data={}){
     
@@ -339,26 +411,22 @@ DCO.prototype.promise = function(){
     
 }
 
-DCO.prototype.today = function(){
-    
+DCO.prototype.today = function(format='mm-dd-yyyy'){
+
     var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1;
+    var dd = String(today.getDate()).padStart(2,'0');
+    var mm = String(today.getMonth()+1).padStart(2,'0');
     var yyyy = today.getFullYear();
 
-    if(dd<10) {
-        dd = '0'+dd
-    } 
+    if(format === 'yyyy-mm-dd'){
+        return yyyy + '-' + mm + '-' + dd;
+    }else if(format === 'dd-mm-yyyy'){
+        return dd + '-' + mm + '-' + yyyy;
+    }
 
-    if(mm<10) {
-        mm = '0'+mm
-    } 
+    return mm + '-' + dd + '-' + yyyy;
 
-    today = mm + '-' + dd + '-' + yyyy;
-                
-    return today;
-    
-}
+};
 
 DCO.prototype.Update = function(){
     
