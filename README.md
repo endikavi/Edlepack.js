@@ -20,6 +20,19 @@ Include `edlepack.js` in a browser environment and use the `º` function (the `�
     // hide and show
     º('#example').hide();
     º('#example').show();
+
+    // toggle visibility
+    º('#example').toggle();
+
+    // set or get attributes
+    º('#example').attr('data-test', 'value');
+    console.log(º('#example').attr('data-test'));
+
+    // update text content
+    º('#example').text('New text');
+
+    // remove element
+    º('#example').remove();
 </script>
 ```
 
@@ -36,6 +49,16 @@ The library includes helpers to serialize forms to JSON and to submit them using
     console.log('status', req.status);
 });
 ```
+
+### Additional utilities
+
+* `attr(name, value)` - get or set attributes
+* `text(value)` - get or set text content
+* `toggle()` - toggle visibility
+* `remove()` - remove the element from the DOM
+* `append(child)` / `prepend(child)` - insert elements or HTML
+* `once(event, callback)` - attach an event listener that fires once
+* `today(format)` - get today's date in different formats (`mm-dd-yyyy` by default)
 
 ## Development
 
